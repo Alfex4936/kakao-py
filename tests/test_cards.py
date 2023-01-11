@@ -1,7 +1,6 @@
 import msgspec
 import pytest
-
-from pykakao import Button, Kakao, ListItem
+from kakao_json import Button, Kakao, ListItem
 
 
 @pytest.fixture

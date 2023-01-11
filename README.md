@@ -17,7 +17,7 @@ SimpleText, SimpleImage, ListCard, Carousel, BasicCard, CommerceCard, ItemCard �
 
 # 설치
 ```bash
-pip install pykakao
+pip install kakao-json
 ```
 
 
@@ -26,7 +26,7 @@ pip install pykakao
 ## ListCard 예제
 
 ```python
-from pykakao import Button, Kakao, ListItem
+from kakao_json import Button, Kakao, ListItem
 
 
 k = Kakao()
@@ -53,8 +53,6 @@ k = Kakao()
 ```
 
 ```json
-/*
-Result:
 {
   "template": {
     "outputs": [
@@ -111,5 +109,4 @@ Result:
   },
   "version": "2.0"
 }
-*/
 ```

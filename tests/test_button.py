@@ -1,7 +1,6 @@
 import msgspec
 import pytest
-
-from pykakao import Kakao
+from kakao_json import Kakao
 
 
 @pytest.fixture
