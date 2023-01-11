@@ -3,8 +3,9 @@ name = "pykakao"
 version = "1.0.0"
 description = "KakaoChatBot JSON helper"
 authors = ["Seok Won <ikr@kakao.com>"]
+license = "MIT"
 readme = "README.md"
-packages = [{include = "pykakao"}]
+packages = [{ include = "pykakao" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
