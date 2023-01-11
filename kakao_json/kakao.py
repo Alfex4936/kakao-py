@@ -35,16 +35,17 @@ class OuterSimpleImage(Struct):
     simpleImage: SimpleImage
 
 
-class Carousel(Struct):
+class Carousel(Struct, omit_defaults=True):
     """# [Carousel](https://i.kakao.com/docs/assets/skill/skill-outputs-carousel-example-1.jpg)
 
     하나의 케로셀 내에서는 모든 이미지를 동일 크기로 설정해야 합니다.
 
     즉, 케로셀 내 모든 이미지가 정사각형 (1:1) 혹은 모든 이미지가 와이드형 (2:1)으로 통일되어야 합니다.
     """
+    __name__ = "Carousel"
 
-    type: str
-    items: list[Card]
+    type: str = "" # MUST
+    items: list[Card] = [] # MUST
     header: Optional[CarouselHeader] = None
 
     def add_card(self, card: Card) -> Carousel:
@@ -159,6 +160,10 @@ class Kakao(Struct):
     def init_list_item(self) -> ListItem:
         return ListItem()
 
+    def init_carousel(self) -> Carousel:
+        """Creates Carousel instance"""
+        return Carousel()
+
     def add_output(self, output):
         match (output.__name__):
             case "CommerceCard":
@@ -209,10 +214,13 @@ if __name__ == "__main__":
     print(k.to_json())
 
     a = Kakao()
-    basic_card = a.init_basic_card()
-    basic_card.set_title("title").set_desc("hello").add_button(
-        a.init_button("labell").set_action_web().set_link("https://naver.com")
-    )
+    a.add_qr("Quick reply")
 
-    a.add_output(basic_card)
-    print(a.to_json())
+    carousel = a.init_carousel()
+    for i in range(5):
+        basic_card = a.init_basic_card()
+        basic_card.set_title(f"Hey {i}").set_image("https://kakao")
+        carousel.add_card(basic_card)
+    a.add_output(carousel)
+    print(a)
+

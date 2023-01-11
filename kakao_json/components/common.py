@@ -109,7 +109,7 @@ class Link(Struct, omit_defaults=True):
     web: Optional[str] = None
 
 
-class Thumbnail(Struct):
+class Thumbnail(Struct, omit_defaults=True):
     """# Thumbnail
 
     ## With ItemCard
@@ -134,10 +134,14 @@ class Thumbnail(Struct):
     """
 
     imageUrl: str
-    link: Optional[Link]
-    fixedRatio: Optional[bool]
-    width: Optional[int]
-    height: Optional[int]
+    link: Optional[Link] = None
+    fixedRatio: Optional[bool] = None
+    width: Optional[int] = None
+    height: Optional[int] = None
+    
+    def set_image(self, url: str) -> Thumbnail:
+        self.imageUrl = url
+        return self
 
     def for_list_card(self, url: str, width: int, height: int) -> Thumbnail:
         self.imageUrl = url

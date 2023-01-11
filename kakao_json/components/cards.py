@@ -53,6 +53,11 @@ class BasicCard(Struct, omit_defaults=True):
         self.description = desc
         return self
 
+    def set_image(self, url: str) -> BasicCard:
+        """Create a thumbnail only with image url"""
+        self.thumbnail = Thumbnail(url)
+        return self
+
     def set_thumbnail(self, thumbnail: Thumbnail) -> BasicCard:
         self.thumbnail = thumbnail
         return self
