@@ -85,7 +85,7 @@ class Social(Struct):
     ...
 
 
-class Link(Struct):
+class Link(Struct, omit_defaults=True):
     """# Link
 
     Information. 링크 우선순위 링크는 다음과 같은 우선순위를 갖습니다.
@@ -104,9 +104,9 @@ class Link(Struct):
         - web: String, 모든 기기에서 웹을 실행하는 link입니다.
     """
 
-    pc: Optional[str]
-    mobile: Optional[str]
-    web: Optional[str]
+    pc: Optional[str] = None
+    mobile: Optional[str] = None
+    web: Optional[str] = None
 
 
 class Thumbnail(Struct):
@@ -171,10 +171,14 @@ class ListItem(Struct, omit_defaults=True):
         return self
 
     def set_title(self, title: str) -> ListItem:
+        if not self.action:
+            self.action = "message"
         self.title = title
         return self
 
     def set_desc(self, desc: str) -> ListItem:
+        if not self.action:
+            self.action = "message"
         self.description = desc
         return self
 
@@ -183,6 +187,8 @@ class ListItem(Struct, omit_defaults=True):
         return self
 
     def set_msg(self, messageText: str) -> ListItem:
+        if not self.action:
+            self.action = "message"
         """사용자의 발화로 messageText를 내보냅니다. (바로가기 응답의 메세지 연결 기능과 동일)"""
         self.messageText = messageText
         return self
@@ -190,7 +196,7 @@ class ListItem(Struct, omit_defaults=True):
     def set_link(self, url: str) -> ListItem:
         """web > pc == mobile"""
         if self.link is None:
-            self.link = Link(web=url)
+            self.link = Link(web=url, pc=None, mobile=None)
         else:
             self.link.web = url
         return self
@@ -198,7 +204,7 @@ class ListItem(Struct, omit_defaults=True):
     def set_link_pc(self, url: str) -> ListItem:
         """web > pc == mobile"""
         if self.link is None:
-            self.link = Link(pc=url)
+            self.link = Link(pc=url, web=None, mobile=None)
         else:
             self.link.pc = url
         return self
@@ -206,7 +212,7 @@ class ListItem(Struct, omit_defaults=True):
     def set_link_mobile(self, url: str) -> ListItem:
         """web > pc == mobile"""
         if self.link is None:
-            self.link = Link(mobile=url)
+            self.link = Link(mobile=url, pc=None, web=None)
         else:
             self.link.mobile = url
         return self
@@ -260,14 +266,20 @@ class Button(Struct, omit_defaults=True):
         return self
 
     def set_link(self, link: str) -> Button:
+        if not self.action:
+            self.action = "webLink"
         self.webLinkUrl = link
         return self
 
     def set_msg(self, msg: str) -> Button:
+        if not self.action:
+            self.action = "message"
         self.messageText = msg
         return self
 
     def set_number(self, number: str) -> Button:
+        if not self.action:
+            self.action = "phone"
         self.phoneNumber = number
         return self
 
@@ -285,7 +297,8 @@ class Button(Struct, omit_defaults=True):
 
     def set_action_msg(self) -> Button:
         self.action = "message"
-        self.messageText = "CHANGE ME"
+        # if not self.messageText:
+        #     self.messageText = self.label if self.label else ""
         return self
 
     def set_action_call(self) -> Button:

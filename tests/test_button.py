@@ -1,11 +1,12 @@
-import pytest
-from pykakao import kakao
 import msgspec
+import pytest
+
+from pykakao import Kakao
 
 
 @pytest.fixture
 def k():
-    return kakao.Kakao()
+    return Kakao()
 
 
 class TestButton:
@@ -18,6 +19,6 @@ class TestButton:
         k.add_output(basic_card)
 
         assert (
-            b'{"outputs":[{"basicCard":{"title":"title","description":"hello","buttons":[{"label":"labell","action":"webLink","webLinkUrl":"https://naver.com"}]}}],"version":"2.0"}'
+            b'{"version":"2.0","template":{"outputs":[{"basicCard":{"title":"title","description":"hello","buttons":[{"label":"labell","action":"webLink","webLinkUrl":"https://naver.com"}]}}]}}'
             == msgspec.json.encode(k)
         )

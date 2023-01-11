@@ -171,12 +171,12 @@ class InnerListCard(Struct, omit_defaults=True):
 
     __name__ = "ListCard"
 
-    header: ListItem
+    header: Optional[ListItem] = None
     items: list[ListItem] = []
     buttons: list[Button] = []
 
-    def set_header(self, item: ListItem) -> InnerListCard:
-        self.header = item
+    def set_header(self, title: str) -> InnerListCard:
+        self.header = ListItem(title)
         return self
 
     def add_item(self, item: ListItem, *items: list[ListItem]) -> InnerListCard:

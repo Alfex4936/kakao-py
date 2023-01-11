@@ -25,9 +25,37 @@ pip install pykakao
 
 ## ListCard 예제
 
+```python
+from pykakao import Button, Kakao, ListItem
+
+
+k = Kakao()
+
+    k.add_qr("오늘", "카톡 발화문1")
+    k.add_qr("어제")  # label becomes also messageText
+
+    list_card = k.init_list_card().set_header("리스트 카드 제목")
+    list_card.add_button(Button("그냥 텍스트 버튼", "message"))
+    list_card.add_button(k.init_button("link label").set_link("https://google.com"))
+    list_card.add_button(
+        k.init_button("share label").set_action_share().set_msg("카톡에 보이는 메시지")
+    )
+    list_card.add_button(k.init_button("call label").set_number("010-1234-5678"))
+
+    list_card.add_item(
+        ListItem("title").set_desc("description").set_link("https://naver.com")
+    )
+
+    k.add_output(list_card)
+
+    print(k.to_json())
+
+```
+
 ```json
 /*
-Result: {
+Result:
+{
   "template": {
     "outputs": [
       {
@@ -84,20 +112,4 @@ Result: {
   "version": "2.0"
 }
 */
-```
-
-## Usage
-```python
-from pykakao.kakao import Kakao
-
-k = Kakao()
-
-basic_card = k.init_basic_card()
-basic_card.set_title("title").set_desc("hello").add_button(
-    k.init_button("labell").set_action_web().set_link("https://naver.com")
-)
-
-k.add_output(basic_card)
-
-msgspec.json.encode(k)
 ```
