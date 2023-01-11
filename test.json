@@ -1,0 +1,17 @@
+{
+    "outputs": [
+        {
+            "basicCard": {
+                "title": "title",
+                "description": "hello",
+                "buttons": [
+                    {
+                        "label": "labell",
+                        "action": "webLink",
+                        "webLinkUrl": "https://naver.com"
+                    }
+                ]
+            }
+        }
+    ]
+}
