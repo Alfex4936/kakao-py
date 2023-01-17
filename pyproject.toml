@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kakao_json"
-version = "1.0.2"
+version = "1.0.3"
 description = "카카오챗봇 JSON helper"
 authors = ["Seok Won <ikr@kakao.com>"]
 license = "MIT"

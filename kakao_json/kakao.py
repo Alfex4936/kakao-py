@@ -42,10 +42,11 @@ class Carousel(Struct, omit_defaults=True):
 
     즉, 케로셀 내 모든 이미지가 정사각형 (1:1) 혹은 모든 이미지가 와이드형 (2:1)으로 통일되어야 합니다.
     """
+
     __name__ = "Carousel"
 
-    type: str = "" # MUST
-    items: list[Card] = [] # MUST
+    type: str = ""  # MUST
+    items: list[Card] = []  # MUST
     header: Optional[CarouselHeader] = None
 
     def add_card(self, card: Card) -> Carousel:
@@ -105,6 +106,9 @@ class Kakao(Struct):
     template: Optional[Outputs] = Outputs()  # type: ignore
     # context: Optional[ContextControl] = None
     # data: Optional[Mapping[str, Any]] = None
+
+    def clear(self):
+        self.template = Outputs()
 
     def add_qr(
         self, label: str, messageText: Optional[str] = None, action: str = "message"
@@ -223,4 +227,3 @@ if __name__ == "__main__":
         carousel.add_card(basic_card)
     a.add_output(carousel)
     print(a)
-
