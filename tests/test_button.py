@@ -1,5 +1,6 @@
 import msgspec
 import pytest
+
 from kakao_json import Kakao
 
 

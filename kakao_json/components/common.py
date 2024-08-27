@@ -138,7 +138,7 @@ class Thumbnail(Struct, omit_defaults=True):
     fixedRatio: Optional[bool] = None
     width: Optional[int] = None
     height: Optional[int] = None
-    
+
     def set_image(self, url: str) -> Thumbnail:
         self.imageUrl = url
         return self

@@ -5,6 +5,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import sys
+import os
+
+# Add the root directory to sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from kakao_json import Button, Kakao, ListItem
 
 app = FastAPI(title="FastAPI kakao-py example", version="1.0.0")
@@ -22,8 +28,8 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/list_card")
-def read_item(req: Dict):
+@app.get("/list_card")
+def read_item():
     @dataclass
     class Item:
         name: str
@@ -31,7 +37,6 @@ def read_item(req: Dict):
 
     # Make your python objects
     items = [Item(f"I {i}", i + 2) for i in range(5)]
-    append = items.append
 
     # kakao-json part
     k = Kakao()
@@ -59,10 +64,9 @@ def read_item(req: Dict):
     k.add_output(list_card)
     k.add_output(carousel)
 
-    # import json
+    import json
 
-    # print(json.loads(k.to_json()))
-
+    print(json.loads(k.to_json()))
     return k.to_json()
 
 

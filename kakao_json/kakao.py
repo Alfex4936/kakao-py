@@ -11,7 +11,7 @@ except:
     from components.common import *
     from components.cards import *
 
-from msgspec import Struct
+from msgspec import Struct, field
 
 Card = BasicCard | CommerceCard | ListCard | ItemCard
 
@@ -97,22 +97,24 @@ Output = (
 
 
 class Outputs(Struct, omit_defaults=True):
-    outputs: list[Output] = []
-    quickReplies: Optional[list[QuickReply]] = []
+    outputs: list[Output] = field(default_factory=list)
+    quickReplies: Optional[list[QuickReply]] = field(default_factory=list)
 
 
 class Kakao(Struct):
     version: str = "2.0"
-    template: Optional[Outputs] = Outputs()  # type: ignore
+    template: Optional[Outputs] = field(default_factory=Outputs) # type: ignore
     # context: Optional[ContextControl] = None
     # data: Optional[Mapping[str, Any]] = None
-
+    
     def clear(self):
+        """Reset all template outputs"""
         self.template = Outputs()
 
     def add_qr(
         self, label: str, messageText: Optional[str] = None, action: str = "message"
     ):
+        """Add Quick reply (label, messageText (optional), action)"""
         self.template.quickReplies.append(
             QuickReply(action, label, label if messageText is None else messageText)
         )
@@ -125,6 +127,10 @@ class Kakao(Struct):
         text가 500자가 넘는 경우, 500자 이후의 글자는 생략되고 전체 보기 버튼을 통해서 전체 내용을 확인할 수 있습니다.
         """
         self.template.outputs.append(OuterSimpleText(SimpleText(text)))
+
+    def simple_text(self, text):
+        """Same as add_simple_text"""
+        return self.add_simple_text(text)  # type: ignore
 
     def add_simple_image(self, url, alt_text):
         """# SimpleImage

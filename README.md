@@ -9,6 +9,9 @@
 
 # 소개
 
+> [!NOTE]  
+> [https://github.com/jcrist/msgspec](msgspec) 을 이용하여 serialization 합니다.
+
 Python 언어로 카카오 챗봇 서버를 만들 때 좀 더 쉽게 JSON 메시지 응답을 만들 수 있게 도와줍니다.
 
 SimpleText, SimpleImage, ListCard, Carousel, BasicCard, CommerceCard, ItemCard 등의
